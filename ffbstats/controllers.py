@@ -137,6 +137,16 @@ class Root(controllers.RootController):
         data = Team.select().filter(Game.q.weekID==num)
         return dict(data=data, datagrid=week_datagrid, num=num)
     
+    @expose()
+    def populate(self):
+        if Team.select().count():
+            flash("The tables are already populated.")
+        else:
+            for team in generate_teams():
+                Team(**team)
+            flash("The tables have been populated now.")
+        redirect("/")
+    
     # Identity methods
     @expose(template="ffbstats.templates.login")
     def login(self, forward_url=None, previous_url=None, *args, **kw):
