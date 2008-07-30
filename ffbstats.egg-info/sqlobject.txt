@@ -1,0 +1,2 @@
+db_module=ffbstats.model
+history_dir=$base/ffbstats/sqlobject-history

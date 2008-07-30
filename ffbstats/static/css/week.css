@@ -1,0 +1,31 @@
+.grid {background-color:#e3e3e3;font-size:12px;font-family:verdana,sans-serif;border:none;width:100%;}
+.grid td, .grid th {padding:3px;border:none;}
+.grid .action_cell {text-align:right;}
+.grid thead tr th {text-align:left;background-color:#f0f0f0;color:#333;}
+.grid thead tr td {text-align:center;}
+.grid thead tr td a {text-decoration:none;font-weight:bold;}
+.grid .heading img {float:right;margin-left:2px;margin-right:3px;}
+.grid .heading a {text-decoration:none;color:#333;}
+.grid tbody tr td a {/*text-decoration:none;*/color:#333;}
+.grid tr.odd td {background-color:#edf3fe;}
+.grid tr.even td {background-color:#fff;}
+.grid .pointer {cursor:pointer;}
+.grid .column_chooser_link {position:relative;background-color:#e3e3e3;}
+.grid .column_chooser_link ul {position:absolute;display:none;top:0px;right:-20px;}
+.grid .column_chooser_list a {width:200px;display:block;padding:3px;background-color:#e3e3e3;}
+.grid .column_chooser_list a:hover {background-color:#cdcdcd;}
+.grid .column_chooser_list {padding:0;margin:0;list-style:none;background-color:#e3e3e3;}
+
+#team_list th {text-align: center;}
+#team_list th.col_0 {text-align: left;}
+#team_list th.col_1 {text-align: left;}
+#team_list th.col_2 {width:4%;}
+#team_list th.col_3 {width:4%;} 
+#team_list th.col_4 {text-align: left;}
+#team_list th.col_5 {width:4%;}
+#team_list th.col_6 {width:4%;}
+#team_list th.col_7 {width:4%;}
+#team_list th.col_8 {width:4%;}
+#team_list th.col_9 {width:4%;}
+#team_list td {text-align: right;}
+#team_list td.col_0, #team_list td.col_1, #team_list td.col_4 {text-align: left;}

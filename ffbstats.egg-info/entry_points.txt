@@ -1,0 +1,3 @@
+[console_scripts]
+start-ffbstats = ffbstats.commands:start
+
