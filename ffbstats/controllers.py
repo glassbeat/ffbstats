@@ -1,3 +1,4 @@
+import turbogears as tg
 from turbogears import controllers, expose, flash, paginate, identity, \
      redirect, url, widgets
 from turbogears.toolbox.catwalk import CatWalk
@@ -130,7 +131,8 @@ class Root(controllers.RootController):
               limit=20,)
     def week(self, num=None):
         if num == None:
-            return dict(weeks="Please select a week")
+            flash("Please select a week")
+            redirect(tg.url("/"))
         data = Team.select().filter(Game.q.weekID==num)
         return dict(data=data, datagrid=week_datagrid, num=num)
     
