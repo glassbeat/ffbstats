@@ -97,6 +97,11 @@ class Game(SQLObject):
     opp1_possible_score = IntCol(default=0)
     opp2_score = IntCol(default=0)
     opp2_possible_score = IntCol(default=0)
+
+#TODO: Could I make a Score table that is related to the game and team table so that
+#I can have just opponents instead of opponent1, opponent2? Look into this more.
+#class Score(SQLObject):
+#    pass
     
 class Week(SQLObject):
     week_num = IntCol(default=None)
