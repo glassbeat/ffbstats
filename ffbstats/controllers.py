@@ -32,7 +32,8 @@ class Root(controllers.RootController):
     @paginate('data', limit=20,)
     def week(self, num=None):
         if num == None:
-            return dict(data=[], datagrid=None, num=num)
+            weeks = Week.select(Week.q.data_entered==True)
+            return dict(data=[], datagrid=None, weeks=weeks, num=num)
         data = Team.select().filter(Game.q.weekID==num)
         return dict(data=data, datagrid=week_datagrid, num=num)
     

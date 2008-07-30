@@ -97,12 +97,12 @@ class Game(SQLObject):
     opp1_possible_score = IntCol(default=0)
     opp2_score = IntCol(default=0)
     opp2_possible_score = IntCol(default=0)
-    played = BoolCol(default=False)
     
 class Week(SQLObject):
     week_num = IntCol(default=None)
     games = MultipleJoin('Game', joinColumn='week_id')
     comments = UnicodeCol(default=None)
+    data_entered = BoolCol()
     
 # identity models.
 class Visit(SQLObject):

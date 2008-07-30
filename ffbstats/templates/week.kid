@@ -12,6 +12,11 @@
     </span>
     <span py:if="num is None" py:strip="">
         <h1>Select a Week</h1>
+        <p py:if="weeks.count() == 0">Sorry, no data has been entered yet.</p>
+        <ul py:if="weeks.count() > 0">
+            <li py:for="week in weeks">
+                <a href="${tg.url('week', num=week.week_num)}">Week $week.week_num</a></li>
+        </ul>
     </span>
 </body>
 </html>
