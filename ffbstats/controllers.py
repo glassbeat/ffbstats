@@ -4,6 +4,7 @@ from turbogears.toolbox.catwalk import CatWalk
 from ffbstats import model
 from cherrypy import request, response
 from pkg_resources import resource_filename
+from ffbstats.lib.populator import generate_teams
 import fpformat
 
 # widgets import
