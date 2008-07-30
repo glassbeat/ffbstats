@@ -71,6 +71,33 @@ def get_points(team):
             return team.games[0].opp2_score
     else:
         return 0
+    
+def get_possible_points(team):
+    if team.games.count():
+        if team.id == team.games[0].opponent1ID:
+            return team.games[0].opp1_possible_score
+        else:
+            return team.games[0].opp2_possible_score
+    else:
+        return 0
+    
+def get_opponent_points(team):
+    if team.games.count():
+        if team.id == team.games[0].opponent1ID:
+            return team.games[0].opp2_score
+        else:
+            return team.games[0].opp1_score
+    else:
+        return 0
+    
+def get_opponent_possible_points(team):
+    if team.games.count():
+        if team.id == team.games[0].opponent1ID:
+            return team.games[0].opp2_possible_score
+        else:
+            return team.games[0].opp1_possible_score
+    else:
+        return 0
 
 week_datagrid = PaginateDataGrid(name='team_list',
                                  template='ffbstats.templates.datagrid',
@@ -83,12 +110,22 @@ week_datagrid = PaginateDataGrid(name='team_list',
                                 getter='owner',
                                 title='Owner',
                                 options=dict(sortable=True)),
-        PaginateDataGrid.Column(name='Points',
+        PaginateDataGrid.Column(name='points',
                                 getter=lambda self: get_points(self),
                                 title='P'),
+        PaginateDataGrid.Column(name='optimal_points',
+                                getter=lambda self: get_possible_points(self),
+                                title='OP'),
         PaginateDataGrid.Column(name='opponent',
                                 getter=lambda self: get_opponent(self),
-                                title='Opponent')
+                                title='Opponent'),
+        PaginateDataGrid.Column(name='opponent_points',
+                                getter=lambda self: get_opponent_points(self),
+                                title='P'),
+        PaginateDataGrid.Column(name='opponent_possible_points',
+                                getter=lambda self: get_opponent_possible_points(self),
+                                title='OP'),
+        
     ])
 
 # change the css file for the widgets
