@@ -8,8 +8,8 @@
 <body>
     <h1>Team List</h1>
     <div py:replace="datagrid(data)"/>
-    <div class="legend"><p>P=Total Points, OP=Total Optimum Points, TRP=Total Roster Points,
-        W=Wins, L=Losses, OW=Optimal Lineup Wins, OL=Optimal Lineup Losses</p></div>
+    <div class="legend"><p>P=Total Points, OP=Total Optimum Points, W=Wins,
+        L=Losses, OW=Optimal Lineup Wins, OL=Optimal Lineup Losses</p></div>
     
 </body>
 </html>
