@@ -32,8 +32,7 @@ class Root(controllers.RootController):
     @paginate('data', limit=20,)
     def week(self, num=None):
         if num == None:
-            flash("Please select a week")
-            redirect(tg.url("/"))
+            return dict(data=[], datagrid=None, num=num)
         data = Team.select().filter(Game.q.weekID==num)
         return dict(data=data, datagrid=week_datagrid, num=num)
     
