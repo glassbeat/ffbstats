@@ -39,10 +39,6 @@ teams_datagrid = PaginateDataGrid(name='team_list',
                                 'total_possible_points',
                                 'OP',
                                 options=dict(sortable=True)),
-        PaginateDataGrid.Column('total_total_points',
-                                'total_total_points',
-                                'TRP',
-                                options=dict(sortable=True)),
         PaginateDataGrid.Column('efficiency',
                                 lambda teams: (
                                     "".join([str(fpformat.fix(

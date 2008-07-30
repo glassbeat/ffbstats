@@ -39,16 +39,6 @@ class Team(SQLObject):
                 result += game.opp2_possible_score
         return result
     
-    # get the total points that the entire team got each week
-    def _get_total_total_points(self):
-        result = 0
-        for game in list(self.games):
-            if game.opponent1ID == self.id:
-                result += game.opp1_total_score
-            elif game.opponent2ID == self.id:
-                result += game.opp2_total_score
-        return result
-    
     def _get_wins(self):
         wins = 0
         for game in list(self.games):
@@ -105,10 +95,8 @@ class Game(SQLObject):
     opponent2 = ForeignKey('Team', default=None)
     opp1_score = IntCol(default=0)
     opp1_possible_score = IntCol(default=0)
-    opp1_total_score = IntCol(default=0)
     opp2_score = IntCol(default=0)
     opp2_possible_score = IntCol(default=0)
-    opp2_total_score = IntCol(default=0)
     played = BoolCol(default=False)
     
 class Week(SQLObject):

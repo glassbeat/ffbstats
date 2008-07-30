@@ -21,11 +21,10 @@
 #team_list th.col_1 {text-align: left;}
 #team_list th.col_2 {width:5%;}
 #team_list th.col_3 {width:5%;} 
-#team_list th.col_4 {width:5%;}
-#team_list th.col_5 {width:10%;}
+#team_list th.col_4 {width:10%;}
+#team_list th.col_5 {width:4%;}
 #team_list th.col_6 {width:4%;}
 #team_list th.col_7 {width:4%;}
 #team_list th.col_8 {width:4%;}
-#team_list th.col_9 {width:4%;}
 #team_list td {text-align: right;}
 #team_list td.col_0, #team_list td.col_1 {text-align: left;}
