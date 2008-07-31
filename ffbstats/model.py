@@ -9,77 +9,30 @@ __connection__ = hub
 class Team(SQLObject):
     name = StringCol(length=40, alternateID=True)
     owner = StringCol(length=40)
-    games1 = MultipleJoin('Game', joinColumn='opponent1_id')
-    games2 = MultipleJoin('Game', joinColumn='opponent2_id')
+    scores = SQLMultipleJoin('Score')
     
-    # get all the games this team has/will participate in
     def _get_games(self):
-        results = Game.select(
-            OR(Game.q.opponent1ID==self.id,
-               Game.q.opponent2ID==self.id))
-        return results
+        games = Game.select().filter(Score.q.team == self.id).distinct()
+        return games
     
     # get the total points this team has scored in every game
     def _get_total_points(self):
-        result = 0
-        for game in list(self.games):
-            if game.opponent1ID == self.id:
-                result += game.opp1_score
-            elif game.opponent2ID == self.id:
-                result += game.opp2_score
-        return result
+        return self.scores.sum('score')
     
     # get the total possible points this team could've scored in every game
     def _get_total_possible_points(self):
-        result = 0
-        for game in list(self.games):
-            if game.opponent1ID == self.id:
-                result += game.opp1_possible_score
-            elif game.opponent2ID == self.id:
-                result += game.opp2_possible_score
-        return result
+        return self.scores.sum('optimal_score')
     
     def _get_wins(self):
-        wins = 0
-        for game in list(self.games):
-            if game.opponent1ID == self.id and game.opp1_score > \
-               game.opp2_score:
-                wins += 1
-            elif game.opponent2ID == self.id and game.opp2_score > \
-                 game.opp1_score:
-                wins += 1
-        return wins
-    
+        Game.select(Game.q.id).filter(Score.q.team == self.id)
     def _get_losses(self):
-        losses = 0
-        for game in list(self.games):
-            if game.opponent1ID == self.id and game.opp1_score < game.opp2_score:
-                losses += 1
-            elif game.opponent2ID == self.id and game.opp2_score < game.opp1_score:
-                losses += 1
-        return losses
+        pass
     
     def _get_optimal_wins(self):
-        wins = 0
-        for game in list(self.games):
-            if game.opponent1ID == self.id and game.opp1_possible_score > \
-               game.opp2_possible_score:
-                wins += 1
-            elif game.opponent2ID == self.id and game.opp2_possible_score > \
-                 game.opp1_possible_score:
-                wins += 1
-        return wins
+        pass
     
     def _get_optimal_losses(self):
-        losses = 0
-        for game in list(self.games):
-            if game.opponent1ID == self.id and game.opp1_possible_score < \
-               game.opp2_possible_score:
-                losses += 1
-            elif game.opponent2ID == self.id and game.opp2_possible_score < \
-                 game.opp1_possible_score:
-                losses += 1
-        return losses
+        pass
     
     def _get_efficiency(self):
         result = 0
@@ -91,12 +44,12 @@ class Team(SQLObject):
     
 class Game(SQLObject):
     week = ForeignKey('Week', default=None)
-    opponent1 = ForeignKey('Team', default=None)
-    opponent2 = ForeignKey('Team', default=None)
-    opp1_score = IntCol(default=0)
-    opp1_possible_score = IntCol(default=0)
-    opp2_score = IntCol(default=0)
-    opp2_possible_score = IntCol(default=0)
+    scores = SQLMultipleJoin('Score')
+class Score(SQLObject):
+    score = IntCol()
+    optimal_score = IntCol()
+    team = ForeignKey('Team', default=None)
+    game = ForeignKey('Game', default=None)
 
 #TODO: Could I make a Score table that is related to the game and team table so that
 #I can have just opponents instead of opponent1, opponent2? Look into this more.
@@ -105,7 +58,7 @@ class Game(SQLObject):
     
 class Week(SQLObject):
     week_num = IntCol(default=None)
-    games = MultipleJoin('Game', joinColumn='week_id')
+    games = SQLMultipleJoin('Game', joinColumn='week_id')
     comments = UnicodeCol(default=None)
     data_entered = BoolCol()
     
