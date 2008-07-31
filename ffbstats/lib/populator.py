@@ -7,7 +7,8 @@ teams_list = [["Matt J.", "Ninja Pirates"],
               ["Mark", "Sailor's Allstars"],
               ["Jamie", "HornDogs"],
               ["Mike", "DrunkenAngryDwarves"],
-              ["Jerry", "100yarddash"]]
+              ["Jerry", "100yarddash"],
+              ["Steve", "Road Warriors"]]
 
 def generate_teams():
     teams = []
