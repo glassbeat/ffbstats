@@ -12,7 +12,7 @@ class Team(SQLObject):
     scores = SQLMultipleJoin('Score')
     
     def _get_games(self):
-        games = Game.select().filter(Score.q.team == self.id).distinct()
+        games = Score.select(Score.q.teamID == self.id).distinct()
         return games
     
     # get the total points this team has scored in every game
@@ -24,15 +24,32 @@ class Team(SQLObject):
         return self.scores.sum('optimal_score')
     
     def _get_wins(self):
-        Game.select(Game.q.id).filter(Score.q.team == self.id)
+        wins = 0
+        for score in self.scores:
+            if score.win:
+                wins += 1
+        return wins
+    
     def _get_losses(self):
-        pass
+        losses = 0
+        for score in self.scores:
+            if score.loss:
+                losses += 1
+        return losses
     
     def _get_optimal_wins(self):
-        pass
+        wins = 0
+        for score in self.scores:
+            if score.optimal_win:
+                wins += 1
+        return wins
     
     def _get_optimal_losses(self):
-        pass
+        losses = 0
+        for score in self.scores:
+            if score.optimal_loss:
+                losses += 1
+        return losses
     
     def _get_efficiency(self):
         result = 0
@@ -44,17 +61,58 @@ class Team(SQLObject):
     
 class Game(SQLObject):
     week = ForeignKey('Week', default=None)
-    scores = SQLMultipleJoin('Score')
+    scores = SQLMultipleJoin('Score', joinColumn='game_id')
+    
 class Score(SQLObject):
     score = IntCol()
     optimal_score = IntCol()
     team = ForeignKey('Team', default=None)
     game = ForeignKey('Game', default=None)
-
-#TODO: Could I make a Score table that is related to the game and team table so that
-#I can have just opponents instead of opponent1, opponent2? Look into this more.
-#class Score(SQLObject):
-#    pass
+    
+    def _get_opponent_score(self):
+        opponent_score = Score.select(Score.q.gameID==self.gameID).filter(
+            Score.q.teamID != self.teamID)
+        return opponent_score
+    
+    def _get_win(self):
+        try:
+            if self.opponent_score.getOne().score < self.score:
+                win = True
+            else:
+                win = None
+            return win
+        except:
+            pass
+    
+    def _get_loss(self):
+        try:
+            if self.opponent_score.getOne().score > self.score:
+                loss = True
+            else:
+                loss = None
+            return loss
+        except:
+            pass
+        
+    def _get_optimal_win(self):
+        try:
+            if self.opponent_score.getOne().optimal_score < self.optimal_score:
+                win = True
+            else:
+                win = None
+            return win
+        except:
+            pass
+    
+    def _get_optimal_loss(self):
+        try:
+            if self.opponent_score.getOne().optimal_score > self.optimal_score:
+                loss = True
+            else:
+                loss = None
+            return loss
+        except:
+            pass
     
 class Week(SQLObject):
     week_num = IntCol(default=None)
